@@ -1,28 +1,68 @@
 const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/auth`
 
 const signUp = async (formData) => {
-try { 
-  const res = await fetch(`${BASE_URL}/sign-up`,{
-        method: 'POST',
-        headers:{
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
+  try {
+    const res = await fetch(`${BASE_URL}/sign-up`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData)
     })
     const data = await res.json()
-     if(data.token) {
-  // Save the token in local 
-        localStorage.setItem('token', data.token)
-        const decodedToken = JSON.parse(atob(data.token.split('.')[1]));
-        return decodedToken
+    
+    if(!res.ok) throw new Error(data.err || 'Something went wrong please try again!.')
+    
+    
+    if (data.token) {
+      // save the token in local storage
+      localStorage.setItem('token', data.token)
+      // returning the user info to use in our app
+      const decodedToken = JSON.parse(atob(data.token.split('.')[1]))
+      return decodedToken
     }
 
- } catch (err) {
+  } catch (err) {
+    throw err 
+  }
+}
+
+const signIn = async (formData) => {
+  try {
+    const res = await fetch(`${BASE_URL}/sign-in`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+    const data = await res.json()
+    if (data.token) {
+      // save the token in local storage
+      localStorage.setItem('token', data.token)
+      // returning the user info to use in our app
+      const decodedToken = JSON.parse(atob(data.token.split('.')[1]))
+      return decodedToken
+    }
+
+  } catch (err) {
     console.log(err)
   }
 }
-            
-export{
-    signUp,
 
+const getUser = () => {
+  const token = localStorage.getItem('token')
+  if (token) {
+    // return decoded token with user object
+      const decodedToken = JSON.parse(atob(token.split('.')[1]))
+      return decodedToken
+  } else {
+    return null
+  }
+}
+
+export {
+  signUp,
+  signIn,
+  getUser,
 }
