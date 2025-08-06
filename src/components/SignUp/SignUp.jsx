@@ -1,6 +1,6 @@
 import {useState} from 'react'
 
-const SignUp = () => {
+const SignUp = (props) => {
 
     const initialState = {
         username: '',
@@ -16,6 +16,7 @@ const SignUp = () => {
 
     const handleSubmit = (evt) => {
         evt.preventDefault()
+        props.handleSignUp(formData)
        console.log('Form was Submited!!!!!!!!!')
     }
 
