@@ -28,18 +28,22 @@ const SignIn = (props) => {
   }
 
   return (
-    <main>
-      <h1>Sign In Form</h1>
-      <form onSubmit={handleSubmit}>
-        <label>Username:</label>
-        <input type="text" name='username' onChange={handleChange} />
-        <br />
-        <label>Password:</label>
-        <input type="password" name='password' onChange={handleChange} />
-        <br />
-        <button type="submit">Sign In</button>
-      </form>
-    </main>
+   <main className="sign-in-page">
+  <h1>Sign In</h1>
+ 
+     
+
+  <form className="sign-in-form" onSubmit={handleSubmit}>
+    <label htmlFor="username">Username:</label>
+    <input id="username" type="text" name="username" value={formData.username} onChange={handleChange} required />
+
+    <label htmlFor="password">Password:</label>
+    <input id="password" type="password" name="password" value={formData.password} onChange={handleChange} required />
+
+    <button className="btn" type="submit">Sign In</button>
+  </form>
+</main>
+
   )
 }
 

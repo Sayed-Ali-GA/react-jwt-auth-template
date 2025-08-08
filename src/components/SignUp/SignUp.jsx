@@ -45,23 +45,48 @@ const SignUp = (props) => {
   }
 
   return (
-    <main>
-      <h1>Sign up Form</h1>
-      {/* add error message display to form */}
-      {error}
-      <form onSubmit={handleSubmit}>
-        <label>Username:</label>
-        <input type="text" name='username' onChange={handleChange} />
-        <br />
-        <label>Password:</label>
-        <input type="password" name='password' onChange={handleChange} />
-        <br />
-        <label>Confirm Password:</label>
-        <input type="password" name="passwordConf" onChange={handleChange} />
-        <br />
-        <button type="submit" disabled={formIsInvalid}>Sign up</button>
-      </form>
-    </main>
+    <main className="sign-up-page">
+  <h1>Sign Up</h1>
+
+  {error && <p className="error-message">{error}</p>}
+
+  <form className="sign-up-form" onSubmit={handleSubmit}>
+    <label htmlFor="username">Username:</label>
+    <input
+      id="username"
+      type="text"
+      name="username"
+      value={formData.username}
+      onChange={handleChange}
+      required
+    />
+
+    <label htmlFor="password">Password:</label>
+    <input
+      id="password"
+      type="password"
+      name="password"
+      value={formData.password}
+      onChange={handleChange}
+      required
+    />
+
+    <label htmlFor="passwordConf">Confirm Password:</label>
+    <input
+      id="passwordConf"
+      type="password"
+      name="passwordConf"
+      value={formData.passwordConf}
+      onChange={handleChange}
+      required
+    />
+
+    <button className="btn" type="submit" disabled={formIsInvalid}>
+      Sign Up
+    </button>
+  </form>
+</main>
+
   )
 }
 
